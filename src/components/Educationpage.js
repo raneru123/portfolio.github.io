@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { default as React, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import styled, { ThemeProvider, keyframes } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { PowerBtn } from '../components/AllSvgs';
 import BigTitle from '../subComponents/BigTitlte';
+import LogoComponent from '../subComponents/LogoComponent';
 import SocialIcons from '../subComponents/SocialIcons';
 
 const MainContainer = styled.div`
@@ -109,6 +110,15 @@ const Title = styled.h2`
     margin-right: 1rem;
   }
 `;
+// const Rotate = styled.span`
+//   display: block;
+//   position: fixed;
+//   right: 1rem;
+//   bottom: 1rem;
+//   width: 80px;
+//   height: 80px;
+//   z-index: 1;
+// `;
 
 const EDUCATION = [
   {
@@ -154,48 +164,38 @@ const DarkTheme = {
   textRgba: '252, 246, 244',
   bodyRgba: '0,0,0',
 };
-
-const bounceInRight = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateX(2000px);
-  }
-  60% {
-    opacity: 1;
-    transform: translateX(-30px);
-  }
-  80% {
-    transform: translateX(10px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-`;
-
-const Preloader = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: #000;
-  animation: ${bounceInRight} 1s ease infinite;
-`;
+// const bounceAnimation = keyframes`
+//   0% {
+//     transform: translateY(0);
+//   }
+//   50% {
+//     transform: translateY(-15px);
+//   }
+//   100% {
+//     transform: translateY(0);
+//   }
+// `;
+// const bounceInRight = keyframes`
+//   0% {
+//     opacity: 0;
+//     transform: translateX(2000px);
+//   }
+//   60% {
+//     opacity: 1;
+//     transform: translateX(-30px);
+//   }
+//   80% {
+//     transform: translateX(10px);
+//   }
+//   100% {
+//     transform: translateX(0);
+//   }
+// `;
 
 const Educationlist = () => {
   const [isButtonClicked, setButtonClicked] = useState(false);
-  const [isLoading, setLoading] = useState(true); // New state for the loading animation
-
-  useEffect(() => {
-    // Simulating an API call or data loading
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000); // You can change the duration to your preference
-  }, []);
-
-  const handleClick = () => {
+  
+     const handleClick = () => {
     setButtonClicked(!isButtonClicked);
   };
 
@@ -205,55 +205,71 @@ const Educationlist = () => {
     );
     setButtonClicked(updatedEducation);
   };
+  
 
   return (
+    
+    
     <ThemeProvider theme={isButtonClicked ? DarkTheme : lightTheme}>
-      <h1 color="light" class="sc-aXZVg hkWTwb">
-        VM
-      </h1>
+      {/* <h1 color="light" class="sc-aXZVg hkWTwb">
+            VM
+          </h1> */}
       <MainContainer>
-        {isLoading && <Preloader />} {/* Show the preloader while loading */}
-        <Header>
+      {/* <h1 color="light" class="sc-aXZVg hkWTwb">
+            VM
+          </h1> */}
+        <Header >
+          {/* <h1 color="light" class="sc-aXZVg hkWTwb">
+            VM
+          </h1> */}
           <Power onClick={handleClick} isButtonClicked={isButtonClicked}>
             <NavLink to="/">
               <PowerBtn width={30} height={30} fill="currentColor" />
+          
             </NavLink>
           </Power>
+          
         </Header>
         <EducationHeading>Education</EducationHeading>
-        <EducationContainer>
-          {EDUCATION.map((item) => (
-            <EducationBox
-              key={item.id}
-              onClick={() => handleEducationItemClick(item.id)}
-              isClicked={item.isClicked}
-              className={item.isClicked ? 'animated' : ''}
-            >
-              <Title>
-                <span>{item.school}</span>
-                {item.isClicked && (
-                  <span>
-                    {isButtonClicked ? '(Dark Theme)' : '(Light Theme)'}
-                  </span>
-                )}
-              </Title>
-              <Main>{item.degree}</Main>
-              {item.id === 1 || item.id === 2 || item.id === 3 ? (
-                <>
-                  <Main>Year: {item.year}</Main>
-                  <Main>Percentage: {item.percentage}</Main>
-                </>
-              ) : null}
-            </EducationBox>
-          ))}
-        </EducationContainer>
+      
+<EducationContainer>
+  {EDUCATION.map((item) => (
+    <EducationBox
+      key={item.id}
+      onClick={() => handleEducationItemClick(item.id)}
+      isClicked={item.isClicked}
+      className={item.isClicked ? 'animated' : ''}
+    >
+      <Title>
+        <span>{item.school}</span>
+        {item.isClicked && (
+          <span>
+            {isButtonClicked ? '(Dark Theme)' : '(Light Theme)'}
+          </span>
+        )}
+      </Title>
+      <Main>{item.degree}</Main>
+      {item.id === 1 || item.id === 2 || item.id === 3 ? (
+        <>
+          <Main>Year: {item.year}</Main>
+          <Main>Percentage: {item.percentage}</Main>
+        </>
+      ) : null}
+    </EducationBox>
+  ))}
+</EducationContainer>;
       </MainContainer>
-
-      <SocialIcons theme="" />
+      <LogoComponent theme='light'/>
+      <SocialIcons theme="light" />
+      {/* <Rotate ref={yinyang}>
+          <YinYang width={80} height={80} fill={DarkTheme.text} />
+        </Rotate> */}
 
       <BigTitle text="EDUCATION" top="50%" right="30%" />
+     
     </ThemeProvider>
   );
 };
+
 
 export default Educationlist;
