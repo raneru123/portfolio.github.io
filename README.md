@@ -1,2 +1,7 @@
-Hello
+npm install
+
+
+
+npm start
+
 
